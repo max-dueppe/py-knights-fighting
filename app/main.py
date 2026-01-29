@@ -91,19 +91,6 @@ KNIGHTS = {
 }
 
 
-class Battle:
-    battle_results = dict()
-
-    @classmethod
-    def fight(cls, fighter_a: Fighter, fighter_b: Fighter) -> None:
-        fighter_a.hp -= fighter_b.power - fighter_a.protection
-        fighter_b.hp -= fighter_a.power - fighter_b.protection
-        fighter_a.hp = max(0, fighter_a.hp)
-        fighter_b.hp = max(0, fighter_b .hp)
-        cls.battle_results[fighter_a.name] = fighter_a.hp
-        cls.battle_results[fighter_b.name] = fighter_b.hp
-
-
 def battle(knights_config: dict) -> dict:
     knights = dict()
 
@@ -129,10 +116,17 @@ def battle(knights_config: dict) -> dict:
         fighter.drink_potion()
         knights[fighter.name] = fighter
 
-    Battle.fight(knights["Lancelot"], knights["Mordred"])
-    Battle.fight(knights["Arthur"], knights["Red Knight"])
+    battle_results = dict()
 
-    return Battle.battle_results
+    def fight(fighter_a: Fighter, fighter_b: Fighter) -> None:
+        fighter_a.hp -= fighter_b.power - fighter_a.protection
+        fighter_b.hp -= fighter_a.power - fighter_b.protection
+        fighter_a.hp = max(0, fighter_a.hp)
+        fighter_b.hp = max(0, fighter_b.hp)
+        battle_results[fighter_a.name] = fighter_a.hp
+        battle_results[fighter_b.name] = fighter_b.hp
 
+    fight(knights["Lancelot"], knights["Mordred"])
+    fight(knights["Arthur"], knights["Red Knight"])
 
-print(battle(KNIGHTS))
+    return battle_results

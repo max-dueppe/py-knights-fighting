@@ -1,3 +1,5 @@
+from typing import Optional
+
 from app.equipment.armour import Armour
 from app.equipment.potion import Potion
 from app.equipment.weapon import Weapon
@@ -10,7 +12,7 @@ class Fighter:
                  hp: int,
                  armour: list[Armour],
                  weapon: Weapon,
-                 potion: Potion) -> None:
+                 potion: Optional[Potion]) -> None:
         self.name = name
         self.power = power
         self.protection = 0
